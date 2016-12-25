@@ -36,7 +36,8 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.  */
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <u.h>
+#include <libc.h>
 #include <string.h>
 
 #include "mini-gmp.h"

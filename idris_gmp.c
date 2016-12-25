@@ -4,7 +4,8 @@
 #else
 #include "mini-gmp.h"
 #endif
-#include <stdlib.h>
+#include <u.h>
+#include <libc.h>
 #include <string.h>
 
 // TMP HACK! Require this much space in the heap before a GMP operation

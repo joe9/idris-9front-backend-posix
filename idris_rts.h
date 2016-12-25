@@ -1,7 +1,8 @@
 #ifndef _IDRISRTS_H
 #define _IDRISRTS_H
 
-#include <stdlib.h>
+#include <u.h>
+#include <libc.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>

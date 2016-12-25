@@ -1,6 +1,7 @@
 #include "idris_opts.h"
 
-#include <stdlib.h>
+#include <u.h>
+#include <libc.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>

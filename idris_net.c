@@ -5,8 +5,7 @@
 #include <errno.h>
 #include <netdb.h>
 #include <stdbool.h>
-#include <u.h>
-#include <libc.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>

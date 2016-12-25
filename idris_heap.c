@@ -2,8 +2,7 @@
 #include "idris_rts.h"
 #include "idris_gc.h"
 
-#include <u.h>
-#include <libc.h>
+#include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <assert.h>

@@ -398,7 +398,7 @@ void idris_disableBuffering();
 // Handle stack overflow.
 // Just reports an error and exits.
 
-void stackOverflow();
+void stackOverflow(void);
 
 // I think these names are nicer for an API...
 

@@ -1,0 +1,2 @@
+
+1 add mkfile with CFLAGS='-c -+ -B ...' to avoid the errors about comments

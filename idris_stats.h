@@ -5,6 +5,7 @@
 #include <time.h>
 #endif
 
+#define _SUSV2_SOURCE
 #include <inttypes.h>
 #include <stdint.h>
 
@@ -24,7 +25,7 @@ typedef struct {
     clock_t start_time;    // Time of rts entry point.
 #endif // IDRIS_ENABLE_STATS
     uint32_t collections;       // How many times gc called.
-} Stats; // without start time it's a monoid, can we remove start_time it somehow?
+} Stats; // without start time it is a monoid, can we remove start_time it somehow?
 
 void print_stats(const Stats * stats);
 void aggregate_stats(Stats * stats1, const Stats * stats2);
@@ -70,7 +71,7 @@ void aggregate_stats(Stats * stats1, const Stats * stats2);
 #define STATS_ALLOC(stats, size)
 #define STATS_ENTER_GC(stats, heap_size)
 #define STATS_LEAVE_GC(stats, heap_size, heap_occuped)  \
-    stats.collections = stats.collections + 1;
-#endif // IDRIS_ENABLE_STATS
+   stats.collections = stats.collections + 1;
+#endif /* IDRIS_ENABLE_STATS */
 
-#endif // _IDRIS_STATS_H
+#endif /* _IDRIS_STATS_H */

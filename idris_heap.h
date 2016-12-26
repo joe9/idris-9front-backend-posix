@@ -1,7 +1,7 @@
 #ifndef _IDRIS_HEAP_H
 #define _IDRIS_HEAP_H
 
-#include <stdbool.h>
+#include "stdbool.h"
 #include <stddef.h>
 
 /* *** C heap ***
@@ -51,9 +51,9 @@ typedef struct CHeap {
     CHeapItem * first;
 
     /// Total size of the heap. (Sum of sizes of items.)
-    /// This may not be a precise size since individual items'
-    /// sizes may be just estimates.
-    size_t size;
+    /// This may not be a precise size since individual items
+   /// sizes may be just estimates.
+   size_t size;
 
     /// When heap reaches this size, GC will be triggered.
     size_t gc_trigger_size;
@@ -66,7 +66,7 @@ void c_heap_init(CHeap * c_heap);
 /// Will call finalizers & deallocate all blocks in the heap.
 void c_heap_destroy(CHeap * c_heap);
 
-/// Insert the given item into the heap if it's not there yet.
+/// Insert the given item into the heap if it is not there yet.
 /// The VM pointer is needed because this operation may trigger GC.
 void c_heap_insert_if_needed(struct VM * vm, CHeap * c_heap, CHeapItem * item);
 
@@ -102,10 +102,10 @@ void free_heap(Heap * heap);
 
 #ifdef IDRIS_DEBUG
 void heap_check_all(Heap * heap);
-// Should be used _between_ gc's.
+/* Should be used _between_ gc s. */
 #define HEAP_CHECK(vm) heap_check_all(&(vm->heap));
 #else
 #define HEAP_CHECK(vm)
-#endif // IDRIS_DEBUG
+#endif /* IDRIS_DEBUG */
 
-#endif // _IDRIS_HEAP_H
+#endif /* _IDRIS_HEAP_H */

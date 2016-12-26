@@ -9,9 +9,7 @@
 #include <pthread.h>
 #endif
 #include <stdint.h>
-#if (__linux__ || __APPLE__ || __FreeBSD__ || __DragonFly__)
 #include <signal.h>
-#endif
 
 #include "idris_heap.h"
 #include "idris_stats.h"
@@ -85,9 +83,9 @@ struct Msg_t {
 typedef struct Msg_t Msg;
 
 struct VM {
-    int active; // 0 if no longer running; keep for message passing
-                // TODO: If we're going to have lots of concurrent threads,
-                // we really need to be cleverer than this!
+   int active; // 0 if no longer running; keep for message passing
+   // TODO: If we are going to have lots of concurrent threads,
+   // we really need to be cleverer than this!
 
     VAL* valstack;
     VAL* valstack_top;
@@ -127,7 +125,7 @@ typedef struct VM VM;
  *
  * Feel free to mutate cd->data; the heap does not care
  * about its particular value. However, keep in mind
- * that it must not break Idris's referential transparency.
+ * that it must not break Idris s referential transparency.
  *
  * If you call cdata_allocate or cdata_manage, the resulting
  * CData object *must* be returned from your FFI function so
@@ -150,13 +148,13 @@ CData cdata_manage(void * data, size_t size, CDataFinalizer * finalizer);
 
 // Create a new VM
 VM* init_vm(int stack_size, size_t heap_size,
-            int max_threads);
+	    int max_threads);
 
 // Get the VM for the current thread
 VM* get_vm(void);
 // Initialise thread-local data for this VM
 void init_threaddata(VM *vm);
-// Clean up a VM once it's no longer needed
+// Clean up a VM once it is no longer needed
 Stats terminate(VM* vm);
 
 // Create a new VM, set up everything with sensible defaults (use when
@@ -196,7 +194,7 @@ typedef void(*func)(VM*, VAL*);
 #define TAG(x) (ISINT(x) || x == NULL ? (-1) : ( GETTY(x) == CT_CON ? (x)->info.c.tag_arity >> 8 : (-1)) )
 #define ARITY(x) (ISINT(x) || x == NULL ? (-1) : ( GETTY(x) == CT_CON ? (x)->info.c.tag_arity & 0x000000ff : (-1)) )
 
-// Already checked it's a CT_CON
+// Already checked it is a CT_CON
 #define CTAG(x) (((x)->info.c.tag_arity) >> 8)
 #define CARITY(x) ((x)->info.c.tag_arity & 0x000000ff)
 
@@ -249,7 +247,7 @@ VAL MKB32(VM* vm, uint32_t b);
 VAL MKB64(VM* vm, uint64_t b);
 VAL MKCDATA(VM* vm, CHeapItem * item);
 
-// following versions don't take a lock when allocating
+// following versions do not take a lock when allocating
 VAL MKFLOATc(VM* vm, double val);
 VAL MKSTROFFc(VM* vm, StrOffset* off);
 VAL MKSTRc(VM* vm, char* str);
@@ -311,10 +309,10 @@ void init_signals();
 void* vmThread(VM* callvm, func f, VAL arg);
 void* idris_stopThread(VM* vm);
 
-// Copy a structure to another vm's heap
+// Copy a structure to another vm heap
 VAL copyTo(VM* newVM, VAL x);
 
-// Add a message to another VM's message queue
+// Add a message to another VM message queue
 int idris_sendMessage(VM* sender, int channel_id, VM* dest, VAL msg);
 // Check whether there are any messages in the queue and return PID of
 // sender if so (null if not)
@@ -373,7 +371,7 @@ VAL idris_readStr(VM* vm, FILE* h);
 
 VAL idris_strHead(VM* vm, VAL str);
 VAL idris_strTail(VM* vm, VAL str);
-// This is not expected to be efficient! Mostly we wouldn't expect to call
+// This is not expected to be efficient! Mostly we would not expect to call
 // it at all at run time.
 VAL idris_strCons(VM* vm, VAL x, VAL xs);
 VAL idris_strIndex(VM* vm, VAL str, VAL i);

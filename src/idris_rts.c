@@ -100,7 +100,7 @@ void create_key(void) {
 }
 #endif
 
-void init_threadkeys(vod) {
+void init_threadkeys(void) {
 #ifdef HAS_PTHREAD
    static pthread_once_t key_once = PTHREAD_ONCE_INIT;
    pthread_once(&key_once, create_key);

@@ -1,0 +1,62 @@
+
+#include "math.h"
+#include "idris_rts.h"
+#include "idris_bitstring.h"
+#include "idris_stdfgn.h"
+void _idris_assert_95_unreachable(VM*, VAL*);
+void _idris_call_95__95_IO(VM*, VAL*);
+void _idris_io_95_bind(VM*, VAL*);
+void _idris_io_95_pure(VM*, VAL*);
+void _idris_Main_46_main(VM*, VAL*);
+void _idris_mkForeignPrim(VM*, VAL*);
+void _idris_prim_95__95_asPtr(VM*, VAL*);
+void _idris_prim_95__95_eqManagedPtr(VM*, VAL*);
+void _idris_prim_95__95_eqPtr(VM*, VAL*);
+void _idris_prim_95__95_null(VM*, VAL*);
+void _idris_prim_95__95_peek16(VM*, VAL*);
+void _idris_prim_95__95_peek32(VM*, VAL*);
+void _idris_prim_95__95_peek64(VM*, VAL*);
+void _idris_prim_95__95_peek8(VM*, VAL*);
+void _idris_prim_95__95_peekDouble(VM*, VAL*);
+void _idris_prim_95__95_peekPtr(VM*, VAL*);
+void _idris_prim_95__95_peekSingle(VM*, VAL*);
+void _idris_prim_95__95_poke16(VM*, VAL*);
+void _idris_prim_95__95_poke32(VM*, VAL*);
+void _idris_prim_95__95_poke64(VM*, VAL*);
+void _idris_prim_95__95_poke8(VM*, VAL*);
+void _idris_prim_95__95_pokeDouble(VM*, VAL*);
+void _idris_prim_95__95_pokePtr(VM*, VAL*);
+void _idris_prim_95__95_pokeSingle(VM*, VAL*);
+void _idris_prim_95__95_ptrOffset(VM*, VAL*);
+void _idris_prim_95__95_readFile(VM*, VAL*);
+void _idris_prim_95__95_registerPtr(VM*, VAL*);
+void _idris_prim_95__95_sizeofPtr(VM*, VAL*);
+void _idris_prim_95__95_stderr(VM*, VAL*);
+void _idris_prim_95__95_stdin(VM*, VAL*);
+void _idris_prim_95__95_stdout(VM*, VAL*);
+void _idris_prim_95__95_vm(VM*, VAL*);
+void _idris_prim_95__95_writeFile(VM*, VAL*);
+void _idris_prim_95__95_writeString(VM*, VAL*);
+void _idris_prim_95_io_95_bind(VM*, VAL*);
+void _idris_prim_95_write(VM*, VAL*);
+void _idris_Prelude_46_Interactive_46_putStr_39_(VM*, VAL*);
+void _idris_run_95__95_IO(VM*, VAL*);
+void _idris_unsafePerformPrimIO(VM*, VAL*);
+void _idris_world(VM*, VAL*);
+void _idris__123_APPLY0_125_(VM*, VAL*);
+void _idris__123_APPLY20_125_(VM*, VAL*);
+void _idris__123_EVAL0_125_(VM*, VAL*);
+void _idris__123_io_95_bind0_125_(VM*, VAL*);
+void _idris_Prelude_46_Interactive_46__123_putStr_39_0_125_(VM*, VAL*);
+void _idris__123_runMain0_125_(VM*, VAL*);
+void _idris__123_io_95_bind1_125_(VM*, VAL*);
+void _idris__123_io_95_bind2_125_(VM*, VAL*);
+void _idris_Decidable_46_Equality_46_Decidable_46_Equality_46__64_Decidable_46_Equality_46_DecEq_36_Char_58__33_decEq_58_0_58_primitiveNotEq_58_0(VM*, VAL*);
+void _idris_Decidable_46_Equality_46_Decidable_46_Equality_46__64_Decidable_46_Equality_46_DecEq_36_Int_58__33_decEq_58_0_58_primitiveNotEq_58_0(VM*, VAL*);
+void _idris_Decidable_46_Equality_46_Decidable_46_Equality_46__64_Decidable_46_Equality_46_DecEq_36_Integer_58__33_decEq_58_0_58_primitiveNotEq_58_0(VM*, VAL*);
+void _idris_Decidable_46_Equality_46_Decidable_46_Equality_46__64_Decidable_46_Equality_46_DecEq_36_ManagedPtr_58__33_decEq_58_0_58_primitiveNotEq_58_0(VM*, VAL*);
+void _idris_Decidable_46_Equality_46_Decidable_46_Equality_46__64_Decidable_46_Equality_46_DecEq_36_Ptr_58__33_decEq_58_0_58_primitiveNotEq_58_0(VM*, VAL*);
+void _idris_Decidable_46_Equality_46_Decidable_46_Equality_46__64_Decidable_46_Equality_46_DecEq_36_String_58__33_decEq_58_0_58_primitiveNotEq_58_0(VM*, VAL*);
+void _idris_io_95_bind_95_IO_95__95_idr_95_107_95_34_95_case(VM*, VAL*);
+void _idris_Void_95__95__95_casefun_95__95_Void_95__95__95_case(VM*, VAL*);
+void _idris_Void_95_elim(VM*, VAL*);

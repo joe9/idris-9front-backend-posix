@@ -54,19 +54,19 @@ typedef struct Closure {
 // uint32_t but enum is platform dependent
     uint32_t ty;
     union {
-        con c;
-        int i;
-        double f;
-        char* str;
-        StrOffset* str_offset;
-        void* ptr;
-        uint8_t bits8;
-        uint16_t bits16;
-        uint32_t bits32;
-        uint64_t bits64;
-        ManagedPtr* mptr;
-        CHeapItem* c_heap_item;
-        size_t size;
+	con c;
+	int i;
+	double f;
+	char* str;
+	StrOffset* str_offset;
+	void* ptr;
+	uint8_t bits8;
+	uint16_t bits16;
+	uint32_t bits32;
+	uint64_t bits64;
+	ManagedPtr* mptr;
+	CHeapItem* c_heap_item;
+	size_t size;
     } info;
 } Closure;
 
@@ -159,11 +159,11 @@ Stats terminate(VM* vm);
 
 // Create a new VM, set up everything with sensible defaults (use when
 // calling Idris from C)
-VM* idris_vm();
+VM* idris_vm(void);
 void close_vm(VM* vm);
 
 // Set up key for thread-local data - called once from idris_main
-void init_threadkeys();
+void init_threadkeys(void);
 
 // Functions all take a pointer to their VM, and previous stack base,
 // and return nothing.
@@ -228,7 +228,7 @@ typedef intptr_t i_int;
 #define INITFRAME VAL* myoldbase
 #define REBASE vm->valstack_base = oldbase
 #define RESERVE(x) if (vm->valstack_top+(x) > vm->stack_max) { stackOverflow(); } \
-                   else { memset(vm->valstack_top, 0, (x)*sizeof(VAL)); }
+   else { memset(vm->valstack_top, 0, (x)*sizeof(VAL)); }
 #define ADDTOP(x) vm->valstack_top += (x)
 #define TOPBASE(x) vm->valstack_top = vm->valstack_base + (x)
 #define BASETOP(x) vm->valstack_base = vm->valstack_top + (x)
@@ -261,10 +261,10 @@ char* GETSTROFF(VAL stroff);
 #define SETARG(x, i, a) ((x)->info.c.args)[i] = ((VAL)(a))
 #define GETARG(x, i) ((x)->info.c.args)[i]
 
-#define PROJECT(vm,r,loc,num) \
-    memcpy(&(LOC(loc)), &((r)->info.c.args), sizeof(VAL)*num)
-#define SLIDE(vm, args) \
-    memcpy(&(LOC(0)), &(TOP(0)), sizeof(VAL)*args)
+#define PROJECT(vm,r,loc,num)					\
+   memcpy(&(LOC(loc)), &((r)->info.c.args), sizeof(VAL)*num)
+#define SLIDE(vm, args)					\
+   memcpy(&(LOC(0)), &(TOP(0)), sizeof(VAL)*args)
 
 void* allocate(size_t size, int outerlock);
 // void* allocCon(VM* vm, int arity, int outerlock);
@@ -276,7 +276,7 @@ void* allocate(size_t size, int outerlock);
 // may take a lock if other threads are running).
 
 void idris_requireAlloc(size_t size);
-void idris_doneAlloc();
+void idris_doneAlloc(void);
 
 // public interface to allocation (note that this may move other pointers
 // if allocating beyond the limits given by idris_requireAlloc!)
@@ -285,26 +285,26 @@ void* idris_alloc(size_t size);
 void* idris_realloc(void* old, size_t old_size, size_t size);
 void idris_free(void* ptr, size_t size);
 
-#define allocCon(cl, vm, t, a, o) \
-  cl = allocate(sizeof(Closure) + sizeof(VAL)*a, o); \
-  SETTY(cl, CT_CON); \
-  cl->info.c.tag_arity = ((t) << 8) | (a);
+#define allocCon(cl, vm, t, a, o)			\
+   cl = allocate(sizeof(Closure) + sizeof(VAL)*a, o);	\
+   SETTY(cl, CT_CON);					\
+   cl->info.c.tag_arity = ((t) << 8) | (a);
 
-#define updateCon(cl, old, t, a) \
-  cl = old; \
-  SETTY(cl, CT_CON); \
-  cl->info.c.tag_arity = ((t) << 8) | (a);
+#define updateCon(cl, old, t, a)		\
+   cl = old;					\
+   SETTY(cl, CT_CON);				\
+   cl->info.c.tag_arity = ((t) << 8) | (a);
 
 #define NULL_CON(x) nullary_cons[x]
 
-int idris_errno();
+int idris_errno(void);
 char* idris_showerror(int err);
 
 extern VAL* nullary_cons;
-void init_nullaries();
-void free_nullaries();
+void init_nullaries(void);
+void free_nullaries(void);
 
-void init_signals();
+void init_signals(void);
 
 void* vmThread(VM* callvm, func f, VAL arg);
 void* idris_stopThread(VM* vm);
@@ -389,11 +389,11 @@ VAL idris_systemInfo(VM* vm, VAL index);
 extern int __idris_argc;
 extern char **__idris_argv;
 
-int idris_numArgs();
+int idris_numArgs(void);
 const char *idris_getArg(int i);
 
 // disable stdin/stdout buffering
-void idris_disableBuffering();
+void idris_disableBuffering(void);
 
 // Handle stack overflow.
 // Just reports an error and exits.

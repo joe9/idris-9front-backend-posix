@@ -47,6 +47,7 @@ int read_size(char * str) {
     fprintf(stderr, "RTS Opts: Unable to parse size. Egs: 1K, 10M, 2G.\n");
     print_usage(stderr);
     exit(EXIT_FAILURE);
+    return -1;
 }
 
 

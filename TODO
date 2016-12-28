@@ -2,6 +2,6 @@
 1. Fix this warning:
 /mnt/term/home/j/dev/apps/plan9/custom/idris-9front-backend/src/idris_main.c:26[stdin:1911] function args not checked: _idris__123_runMain0_125_
 
-2. use the Idris-dev as a submodule and generate the backend (from a patch?)
+2. use the Idris-dev as a submodule and generate the backend (from a patch?). php is an easy to understand backend.
 3. FFI bindings
 4.

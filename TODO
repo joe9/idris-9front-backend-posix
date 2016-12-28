@@ -1,3 +1,7 @@
 
-1 Fix this warning:
+1. Fix this warning:
 /mnt/term/home/j/dev/apps/plan9/custom/idris-9front-backend/src/idris_main.c:26[stdin:1911] function args not checked: _idris__123_runMain0_125_
+
+2. use the Idris-dev as a submodule and generate the backend (from a patch?)
+3. FFI bindings
+4.

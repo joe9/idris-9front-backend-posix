@@ -2,7 +2,6 @@
 #include "idris_stats.h"
 #include "idris_rts.h"
 #include "idris_gmp.h"
-#include "hello.h"
 // The default options should give satisfactory results under many circumstances.
 RTSOpts opts = {
    .init_heap_size = 16384000,
@@ -28,14 +27,14 @@ int main(int argc, char* argv[]) {
 
 #ifdef IDRIS_DEBUG
     if (opts.show_summary) {
-	idris_gcInfo(vm, 1);
+       idris_gcInfo(vm, 1);
     }
 #endif
 
     Stats stats = terminate(vm);
 
     if (opts.show_summary) {
-	print_stats(&stats);
+       print_stats(&stats);
     }
 
     free_nullaries();

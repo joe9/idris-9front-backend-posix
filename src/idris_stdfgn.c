@@ -64,22 +64,23 @@ int idris_writeStr(void* h, char* str) {
 
 int fpoll(void* h)
 {
-#if defined(WIN32) || defined(__WIN32) || defined(__WIN32__)
-    return win_fpoll(h);
-#else
-    FILE* f = (FILE*)h;
-    fd_set x;
-    struct timeval timeout;
-    timeout.tv_sec = 1;
-    timeout.tv_usec = 0;
-    int fd = fileno(f);
+/* #if defined(WIN32) || defined(__WIN32) || defined(__WIN32__) */
+/*     return win_fpoll(h); */
+/* #else */
+/*     FILE* f = (FILE*)h; */
+/*     fd_set x; */
+/*     struct timeval timeout; */
+/*     timeout.tv_sec = 1; */
+/*     timeout.tv_usec = 0; */
+   /*     int fd = fileno(f); */
 
-    FD_ZERO(&x);
-    FD_SET(fd, &x);
+   /*     FD_ZERO(&x); */
+   /*     FD_SET(fd, &x); */
 
-    int r = select(fd+1, &x, 0, 0, &timeout);
-    return r;
-#endif
+   /*     int r = select(fd+1, &x, 0, 0, &timeout); */
+   /*     return r; */
+   /* #endif */
+   return 1;
 }
 
 void* do_popen(const char* cmd, const char* mode) {

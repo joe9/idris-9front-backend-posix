@@ -26,22 +26,22 @@ int read_size(char * str) {
     int r = sscanf(str, "%u%c", &size, &mult);
 
     if (r == 1)
-        return size;
+	return size;
 
     if (r == 2) {
-        switch (mult) {
-        case 'K': size = size << 10; break;
-        case 'M': size = size << 20; break;
-        case 'G': size = size << 30; break;
-        default:
-            fprintf(stderr,
-                    "RTS Opts: Unable to recognize size suffix `%c'.\n" \
-                    "          Possible suffixes are K or M or G.\n",
-                    mult);
-            print_usage(stderr);
-            exit(EXIT_FAILURE);
-        }
-        return size;
+	switch (mult) {
+	case 'K': size = size << 10; break;
+	case 'M': size = size << 20; break;
+	case 'G': size = size << 30; break;
+	default:
+	    fprintf(stderr,
+		    "RTS Opts: Unable to recognize size suffix `%c'.\n" \
+		    "          Possible suffixes are K or M or G.\n",
+		    mult);
+	    print_usage(stderr);
+	    exit(EXIT_FAILURE);
+	}
+	return size;
     }
 
     fprintf(stderr, "RTS Opts: Unable to parse size. Egs: 1K, 10M, 2G.\n");
@@ -54,47 +54,47 @@ int read_size(char * str) {
 int parse_args(RTSOpts * opts, int argc, char *argv[])
 {
     if (argc == 0)
-        return 0;
+	return 0;
 
     if (strcmp(argv[0], "+RTS") != 0)
-        return 0;
+	return 0;
 
     int i;
     for (i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-RTS") == 0) {
-            return i + 1;
-        }
+	if (strcmp(argv[i], "-RTS") == 0) {
+	    return i + 1;
+	}
 
-        if (argv[i][0] != '-') {
-            fprintf(stderr, "RTS options should start with '-'.\n");
-            print_usage(stderr);
-            exit(EXIT_FAILURE);
-        }
+	if (argv[i][0] != '-') {
+	    fprintf(stderr, "RTS options should start with '-'.\n");
+	    print_usage(stderr);
+	    exit(EXIT_FAILURE);
+	}
 
-        switch (argv[i][1])
-        {
-        case '?':
-            print_usage(stdout);
-            exit(EXIT_SUCCESS);
-            break;
+	switch (argv[i][1])
+	{
+	case '?':
+	    print_usage(stdout);
+	    exit(EXIT_SUCCESS);
+	    break;
 
-        case 's':
-            opts->show_summary = 1;
-            break;
+	case 's':
+	    opts->show_summary = 1;
+	    break;
 
-        case 'H':
-            opts->init_heap_size = read_size(argv[i] + 2);
-            break;
+	case 'H':
+	    opts->init_heap_size = read_size(argv[i] + 2);
+	    break;
 
-        case 'K':
-            opts->max_stack_size = read_size(argv[i] + 2);
-            break;
+	case 'K':
+	    opts->max_stack_size = read_size(argv[i] + 2);
+	    break;
 
-        default:
-            printf("RTS opts: Wrong argument: %s\n", argv[i]);
-            print_usage(stderr);
-            exit(EXIT_FAILURE);
-        }
+	default:
+	    printf("RTS opts: Wrong argument: %s\n", argv[i]);
+	    print_usage(stderr);
+	    exit(EXIT_FAILURE);
+	}
     }
 
     return argc;

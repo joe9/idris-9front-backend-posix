@@ -78,7 +78,7 @@ void cheney(VM *vm) {
     while(scan < vm->heap.next) {
        size_t inc = *((size_t*)scan);
        VAL heap_item = (VAL)(scan+sizeof(size_t));
-       // If it is a CT_CON or CT_STROFFSET, copy its arguments
+       // If it's a CT_CON or CT_STROFFSET, copy its arguments
        switch(GETTY(heap_item)) {
        case CT_CON:
            ar = ARITY(heap_item);

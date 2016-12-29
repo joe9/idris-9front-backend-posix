@@ -321,7 +321,7 @@ void _idris_prim_95__95_ptrOffset(VM* vm, VAL* oldbase) {
     INITFRAME;
     RESERVE(1);
     ADDTOP(1);
-    RVAL = MKPTR(vm, (char *)GETPTR(LOC(0)) + GETINT(LOC(1)));
+    RVAL = MKPTR(vm, (void *)((char *)GETPTR(LOC(0)) + GETINT(LOC(1))));
     TOPBASE(0);
     REBASE;
 }

@@ -1,4 +1,4 @@
-module IRTS.CodegenPHP(codegenPHP) where
+module IRTS.Codegen9FrontC(codegen9FrontC) where
 
 import IRTS.CodegenCommon
 import IRTS.Lang
@@ -8,16 +8,16 @@ import Idris.Core.TT
 import Data.Maybe
 import Data.Char
 
-codegenPHP :: CodeGenerator
-codegenPHP ci = do let out = concatMap doCodegen (simpleDecls ci)
+codegen9FrontC :: CodeGenerator
+codegen9FrontC ci = do let out = concatMap doCodegen (simpleDecls ci)
                    writeFile (outputFile ci) ("<?php\n" ++ helpers ++ "\n" ++
-                                                        out ++ "\n" ++ 
-                                                        start ++ "\n" ++ 
+                                                        out ++ "\n" ++
+                                                        start ++ "\n" ++
                                               "\n\n")
 
 start = phpname (sMN 0 "runMain") ++ "();"
 
-helpers = errCode ++ "\n" ++ 
+helpers = errCode ++ "\n" ++
           doEcho ++ "\n" ++
           doRead ++ "\n" ++
           mkStr ++ "\n" ++
@@ -44,7 +44,7 @@ doCodegen :: (Name, SDecl) -> String
 doCodegen (n, SFun _ args i def) = cgFun n args def
 
 cgFun :: Name -> [Name] -> SExp -> String
-cgFun n args def 
+cgFun n args def
     = "function " ++ phpname n ++ "("
                   ++ showSep "," (map (loc . fst) (zip [0..] args)) ++ ") {\n"
                   ++ cgBody doRet def ++ "\n}\n\n"
@@ -60,8 +60,8 @@ cgFun n args def
 
 cgBody :: (String -> String) -> SExp -> String
 cgBody ret (SV (Glob n)) = ret $ phpname n ++ "()"
-cgBody ret (SV (Loc i)) = ret $ loc i 
-cgBody ret (SApp _ f args) = ret $ phpname f ++ "(" ++ 
+cgBody ret (SV (Loc i)) = ret $ loc i
+cgBody ret (SApp _ f args) = ret $ phpname f ++ "(" ++
                                    showSep "," (map cgVar args) ++ ")"
 cgBody ret (SLet (Loc i) v sc)
    = cgBody (\x -> loc i ++ " = " ++ x ++ ";\n") v ++
@@ -71,17 +71,17 @@ cgBody ret (SUpdate n e)
 cgBody ret (SProj e i)
    = ret $ cgVar e ++ "[" ++ show (i + 1) ++ "]"
 cgBody ret (SCon _ t n args)
-   = ret $ "array(" ++ showSep "," 
+   = ret $ "array(" ++ showSep ","
               (show t : (map cgVar args)) ++ ")"
 cgBody ret (SCase _ e alts)
-   = let scrvar = cgVar e 
+   = let scrvar = cgVar e
          scr = if any conCase alts then scrvar ++ "[0]" else scrvar in
        "switch(" ++ scr ++ ") {\n"
          ++ showSep "\nbreak;\n" (map (cgAlt ret scrvar) alts) ++ "\n}"
   where conCase (SConCase _ _ _ _ _) = True
         conCase _ = False
 cgBody ret (SChkCase e alts)
-   = let scrvar = cgVar e 
+   = let scrvar = cgVar e
          scr = if any conCase alts then scrvar ++ "[0]" else scrvar in
        "switch(" ++ scr ++ ") {\n"
          ++ showSep "\nbreak;\n" (map (cgAlt ret scrvar) alts) ++ "\n}"
@@ -105,7 +105,7 @@ cgAlt ret scr (SConCase lv t n args exp)
                                   ++ project (i + 1) (v + 1) ns
 
 cgVar :: LVar -> String
-cgVar (Loc i) = loc i 
+cgVar (Loc i) = loc i
 cgVar (Glob n) = var n
 
 cgConst :: Const -> String
@@ -118,21 +118,21 @@ cgConst x | isTypeConst x = "0"
 cgConst x = error $ "Constant " ++ show x ++ " not compilable yet"
 
 cgOp :: PrimFn -> [String] -> String
-cgOp (LPlus (ATInt _)) [l, r] 
+cgOp (LPlus (ATInt _)) [l, r]
      = "(" ++ l ++ " + " ++ r ++ ")"
-cgOp (LMinus (ATInt _)) [l, r] 
+cgOp (LMinus (ATInt _)) [l, r]
      = "(" ++ l ++ " - " ++ r ++ ")"
-cgOp (LTimes (ATInt _)) [l, r] 
+cgOp (LTimes (ATInt _)) [l, r]
      = "(" ++ l ++ " * " ++ r ++ ")"
-cgOp (LEq (ATInt _)) [l, r] 
+cgOp (LEq (ATInt _)) [l, r]
      = "(" ++ l ++ " == " ++ r ++ ")"
-cgOp (LSLt (ATInt _)) [l, r] 
+cgOp (LSLt (ATInt _)) [l, r]
      = "(" ++ l ++ " < " ++ r ++ ")"
-cgOp (LSLe (ATInt _)) [l, r] 
+cgOp (LSLe (ATInt _)) [l, r]
      = "(" ++ l ++ " <= " ++ r ++ ")"
-cgOp (LSGt (ATInt _)) [l, r] 
+cgOp (LSGt (ATInt _)) [l, r]
      = "(" ++ l ++ " > " ++ r ++ ")"
-cgOp (LSGe (ATInt _)) [l, r] 
+cgOp (LSGe (ATInt _)) [l, r]
      = "(" ++ l ++ " >= " ++ r ++ ")"
 cgOp LStrEq [l,r] = "(" ++ l ++ " == " ++ r ++ ")"
 cgOp LStrRev [x] = "strrev(" ++ x ++ ")"

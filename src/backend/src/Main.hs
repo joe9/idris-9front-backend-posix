@@ -8,17 +8,17 @@ import Idris.Main
 import Idris.ModeCommon
 
 import IRTS.Compiler
-import IRTS.CodegenFrontC
+import IRTS.Codegen9FrontC
 
 import System.Environment
 import System.Exit
 
-import Paths_idris_php
+import Paths_idris_9frontc
 
 data Opts = Opts { inputs :: [FilePath],
                    output :: FilePath }
 
-showUsage = do putStrLn "Usage: idris-php <ibc-files> [-o <output-file>]"
+showUsage = do putStrLn "Usage: idris-9frontc <ibc-files> [-o <output-file>]"
                exitWith ExitSuccess
 
 getOpts :: IO Opts
@@ -34,8 +34,8 @@ c_main :: Opts -> Idris ()
 c_main opts = do elabPrims
                  loadInputs (inputs opts) Nothing
                  mainProg <- elabMain
-                 ir <- compile (Via IBCFormat "php") (output opts) (Just mainProg)
-                 runIO $ codegenPHP ir
+                 ir <- compile (Via IBCFormat "9frontc") (output opts) (Just mainProg)
+                 runIO $ codegen9FrontC ir
 
 main :: IO ()
 main = do opts <- getOpts

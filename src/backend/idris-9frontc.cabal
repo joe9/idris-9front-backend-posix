@@ -1,4 +1,4 @@
-Name:           idris-frontc
+Name:           idris-9frontc
 Version:        0.0.0.1
 License:        BSD3
 License-file:   LICENSE
@@ -9,7 +9,7 @@ Cabal-Version:  >= 1.8
 Extra-source-files:
                    frontcrts/*.frontc
 
-Executable idris-codegen-frontc
+Executable idris-codegen-9frontc
   Main-is:        Main.hs
   hs-source-dirs: src
 
@@ -22,7 +22,7 @@ Executable idris-codegen-frontc
                 , mtl
                 , transformers
 
-  other-modules: IRTS.CodegenFrontC
+  other-modules: IRTS.Codegen9FrontC
 
   if os(linux)
      cpp-options:   -DLINUX

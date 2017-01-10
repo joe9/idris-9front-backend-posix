@@ -22,7 +22,7 @@ Executable idris-codegen-frontc
                 , mtl
                 , transformers
 
-  other-modules: IRTS.CodegenFRONTC
+  other-modules: IRTS.CodegenFrontC
 
   if os(linux)
      cpp-options:   -DLINUX

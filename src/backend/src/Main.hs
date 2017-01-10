@@ -8,7 +8,7 @@ import Idris.Main
 import Idris.ModeCommon
 
 import IRTS.Compiler
-import IRTS.CodegenPHP
+import IRTS.CodegenFrontC
 
 import System.Environment
 import System.Exit
@@ -39,7 +39,7 @@ c_main opts = do elabPrims
 
 main :: IO ()
 main = do opts <- getOpts
-          if (null (inputs opts)) 
+          if (null (inputs opts))
              then showUsage
              else runMain (c_main opts)
 

@@ -33,7 +33,6 @@ import System.Process
 codegen9FrontC :: CodeGenerator
 codegen9FrontC ci = do codegenC' (simpleDecls ci)
                            (outputFile ci)
-                           (outputType ci)
                            (includes ci)
                            (compileObjs ci)
                            (map mkLib (compileLibs ci) ++
@@ -50,7 +49,6 @@ codegen9FrontC ci = do codegenC' (simpleDecls ci)
 
 codegenC' :: [(Name, SDecl)]
           -> String        -- ^ output file name
-          -> OutputType    -- ^ generate executable if True, only .o if False
           -> [FilePath]    -- ^ include files
           -> [String]      -- ^ extra object files
           -> [String]      -- ^ extra compiler flags (libraries)
@@ -59,47 +57,17 @@ codegenC' :: [(Name, SDecl)]
           -> Bool          -- ^ interfaces too (so make a .o instead)
           -> DbgLevel
           -> IO ()
-codegenC' defs out exec incs objs libs flags exports iface dbg
+codegenC' defs out incs objs libs flags exports iface dbg
     = do -- print defs
          let bc = map toBC defs
          let wrappers = genWrappers bc
          let h = concatMap toDecl (map fst bc)
          let cc = concatMap (uncurry toC) bc
          let hi = concatMap ifaceC (concatMap getExp exports)
-         d <- getIdrisCRTSDir
-         mprog <- readFile (d </> "idris_main" <.> "c")
-         let cout = headers incs ++ debug dbg ++ h ++ wrappers ++ cc ++
-                     (if (exec == Executable) then mprog else hi)
-         case exec of
-           Raw -> writeSource out cout
-           _ -> do
-             (tmpn, tmph) <- tempfile ".c"
-             hPutStr tmph cout
-             hFlush tmph
-             hClose tmph
-             comp <- getCC
-             libFlags <- getLibFlags
-             incFlags <- getIncFlags
-             envFlags <- getEnvFlags
-             let stackFlag = if isWindows then ["-Wl,--stack,16777216"] else []
-             let args = [gccDbg dbg] ++
-                        gccFlags iface ++
-                        -- # Any flags defined here which alter the RTS API must also be added to config.mk
-                        ["-DHAS_PTHREAD", "-DIDRIS_ENABLE_STATS",
-                         "-I."] ++ objs ++ envFlags ++
-                        (if (exec == Executable) then [] else ["-c"]) ++
-                        [tmpn] ++
-                        (if not iface then libFlags else []) ++
-                        incFlags ++
-                        (if not iface then libs else []) ++
-                        flags ++ stackFlag ++
-                        ["-o", out]
---              putStrLn (show args)
-             exit <- rawSystem comp args
-             when (exit /= ExitSuccess) $
-                putStrLn ("FAILURE: " ++ show comp ++ " " ++ show args)
-  where
-    getExp (Export _ _ exp) = exp
+         let cout = headers incs ++ debug dbg ++ h ++ wrappers ++ cc ++ hi
+         writeSource out cout
+      where
+        getExp (Export _ _ exp) = exp
 
 headers xs =
   concatMap

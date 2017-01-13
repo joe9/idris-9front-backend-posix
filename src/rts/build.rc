@@ -1,8 +1,10 @@
 #!/bin/rc
 
-last=`{mtime idris_heap.c}
+# Purpose:
+# run the mk, if any .c or .h file in the directory is changed.
 
-echo 'last mtime is: ' $last(1)
+# last=`{mtime idris_heap.c}
+# echo 'last mtime is: ' $last(1)
 # while (sleep 1) {
 #   current=`{mtime idris_heap.c}
 #   echo 'last mtime is: ' $last(1)
@@ -13,21 +15,35 @@ echo 'last mtime is: ' $last(1)
 #   }
 # }
 
-fn checkmtime {
-  current=`{mtime $1}
-  #   echo 'last mtime is: ' $last(1)
-  #   echo 'current mtime is: ' $current(1)
-  test $current(1) -gt $last(1)
-}
+# fn checkmtime {
+#   current=`{mtime $1}
+#   echo 'last mtime is: ' $last(1)
+#   echo 'current mtime is: ' $current(1)
+#   test $current(1) -gt $last(1)
+# }
 
-while (sleep 10) {
-  for (file in *.[ch]) {
-    #     echo 'file is ' $file
-    #     echo 'last mtime is: ' $last(1)
-    if (checkmtime $file) {
+# while (sleep 10) {
+#   for (file in *.[ch]) {
+#     echo 'file is ' $file
+#     echo 'last mtime is: ' $last(1)
+#     if (checkmtime $file) {
+#       mk
+#       last=`{mtime $file}
+#     }
+#   }
+# }
+
+# below based on microft7 idea
+# if a file chnges within the same minute, the below script will miss the change.
+lastcontents=`{ls -l *.[ch]}
+last=$"lastcontents
+while (sleep 1) {
+    currentcontents=`{ls -l *.[ch]}
+    current=$"currentcontents
+    #   echo 'last contents are: ' $last
+    #   echo 'current contents are: ' $current
+    if (! ~ $current $last) {
       mk
-      last=`{mtime $file}
+      last=$current
     }
-  }
 }
-

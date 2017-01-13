@@ -1,0 +1,13 @@
+</$objtype/mkfile
+
+all: idris_heap.$O
+
+%.$O: %.c
+        $CC $CFLAGS -Fvw $stem.c
+
+install:
+        mk
+        # cp hello /$objtype/bin
+
+clean:
+   rm *.$O

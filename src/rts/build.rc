@@ -44,7 +44,6 @@ while (sleep 1) {
   #   echo 'last contents are: ' $last
   #   echo 'current contents are: ' $current
   if (! ~ $current $last) {
-    echo 'current contents are: ' $current
     mk
     last=$current
   }

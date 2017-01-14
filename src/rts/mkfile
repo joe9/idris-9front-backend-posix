@@ -1,6 +1,10 @@
 </$objtype/mkfile
 
-all: idris_heap.$O
+all: idris_gmp.$O idris_heap.$O
+
+$O.testmp.out: testmp.$O
+        $LD -o 8.testmp.out testmp.$O
+        ./8.testmp.out
 
 %.$O: %.c
         $CC $CFLAGS -Fvw $stem.c

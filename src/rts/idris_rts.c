@@ -1,11 +1,11 @@
-#include <assert.h>
-#include <errno.h>
 
+#include <u.h>
+#include <libc.h>
+#include <stdio.h>
+#include "common.h"
+#include "idris_stats.h"
+#include "idris_heap.h"
 #include "idris_rts.h"
-#include "idris_gc.h"
-#include "idris_utf8.h"
-#include "idris_bitstring.h"
-#include "getline.h"
 
 #ifdef HAS_PTHREAD
 static pthread_key_t vm_key;
@@ -1096,3 +1096,7 @@ void stackOverflow(void) {
   fprintf(stderr, "Stack overflow");
   exit(-1);
 }
+
+/*  Local Variables: */
+/*  indent-tabs-mode : 0 */
+/*  End:  */

@@ -206,7 +206,7 @@ typedef void(*func)(VM*, VAL*);
 #define INITFRAME VAL* myoldbase
 #define REBASE vm->valstack_base = oldbase
 #define RESERVE(x) if (vm->valstack_top+(x) > vm->stack_max) { stackOverflow(); } \
-                   else { memset(vm->valstack_top, 0, (x)*sizeof(VAL)); }
+    else { memset(vm->valstack_top, 0, (x)*sizeof(VAL)); }
 #define ADDTOP(x) vm->valstack_top += (x)
 #define TOPBASE(x) vm->valstack_top = vm->valstack_base + (x)
 #define BASETOP(x) vm->valstack_base = vm->valstack_top + (x)
@@ -239,9 +239,9 @@ char* GETSTROFF(VAL stroff);
 #define SETARG(x, i, a) ((x)->info.c.args)[i] = ((VAL)(a))
 #define GETARG(x, i) ((x)->info.c.args)[i]
 
-#define PROJECT(vm,r,loc,num) \
+#define PROJECT(vm,r,loc,num)					\
     memcpy(&(LOC(loc)), &((r)->info.c.args), sizeof(VAL)*num)
-#define SLIDE(vm, args) \
+#define SLIDE(vm, args)					\
     memcpy(&(LOC(0)), &(TOP(0)), sizeof(VAL)*args)
 
 void* allocate(size_t size, int outerlock);
@@ -263,15 +263,15 @@ void* idris_alloc(size_t size);
 void* idris_realloc(void* old, size_t old_size, size_t size);
 void idris_free(void* ptr, size_t size);
 
-#define allocCon(cl, vm, t, a, o) \
-  cl = allocate(sizeof(Closure) + sizeof(VAL)*a, o); \
-  SETTY(cl, CT_CON); \
-  cl->info.c.tag_arity = ((t) << 8) | (a);
+#define allocCon(cl, vm, t, a, o)			\
+    cl = allocate(sizeof(Closure) + sizeof(VAL)*a, o);	\
+    SETTY(cl, CT_CON);					\
+    cl->info.c.tag_arity = ((t) << 8) | (a);
 
-#define updateCon(cl, old, t, a) \
-  cl = old; \
-  SETTY(cl, CT_CON); \
-  cl->info.c.tag_arity = ((t) << 8) | (a);
+#define updateCon(cl, old, t, a)		\
+    cl = old;					\
+    SETTY(cl, CT_CON);				\
+    cl->info.c.tag_arity = ((t) << 8) | (a);
 
 #define NULL_CON(x) nullary_cons[x]
 

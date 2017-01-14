@@ -30,7 +30,7 @@ VAL MKBIGC(VM* vm, char* val) {
     }
     else {
         idris_requireAlloc(IDRIS_MAXGMP);
-        mpint* bigint;
+        mpint* bigint = nil;
 
         VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
         idris_doneAlloc();
@@ -49,7 +49,7 @@ VAL MKBIGC(VM* vm, char* val) {
 VAL MKBIGM(VM* vm, void* big) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -66,7 +66,7 @@ VAL MKBIGM(VM* vm, void* big) {
 VAL MKBIGMc(VM* vm, void* big) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -82,12 +82,12 @@ VAL MKBIGMc(VM* vm, void* big) {
 VAL MKBIGUI(VM* vm, unsigned long val) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
 
-    mpz_init_set_ui(*bigint, val);
+    uitomp(val, bigint);
 
     SETTY(cl, CT_BIGINT);
     cl -> info.ptr = (void*)bigint;
@@ -98,12 +98,12 @@ VAL MKBIGUI(VM* vm, unsigned long val) {
 VAL MKBIGSI(VM* vm, signed long val) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
 
-    mpz_init_set_si(*bigint, val);
+    itomp(val, bigint);
 
     SETTY(cl, CT_BIGINT);
     cl -> info.ptr = (void*)bigint;
@@ -115,7 +115,7 @@ VAL GETBIG(VM * vm, VAL x) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
     if (ISINT(x)) {
-        mpint* bigint;
+        mpint* bigint = nil;
         VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
         idris_doneAlloc();
         bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -141,7 +141,7 @@ VAL GETBIG(VM * vm, VAL x) {
 VAL bigAdd(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -154,7 +154,7 @@ VAL bigAdd(VM* vm, VAL x, VAL y) {
 VAL bigSub(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -167,7 +167,7 @@ VAL bigSub(VM* vm, VAL x, VAL y) {
 VAL bigMul(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -180,7 +180,7 @@ VAL bigMul(VM* vm, VAL x, VAL y) {
 VAL bigDiv(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -193,7 +193,7 @@ VAL bigDiv(VM* vm, VAL x, VAL y) {
 VAL bigMod(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -206,7 +206,7 @@ VAL bigMod(VM* vm, VAL x, VAL y) {
 VAL bigAnd(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -219,7 +219,7 @@ VAL bigAnd(VM* vm, VAL x, VAL y) {
 VAL bigOr(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -232,7 +232,7 @@ VAL bigOr(VM* vm, VAL x, VAL y) {
 VAL bigShiftLeft(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -246,7 +246,7 @@ VAL bigShiftLeft(VM* vm, VAL x, VAL y) {
 VAL bigLShiftRight(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -259,7 +259,7 @@ VAL bigLShiftRight(VM* vm, VAL x, VAL y) {
 VAL bigAShiftRight(VM* vm, VAL x, VAL y) {
     idris_requireAlloc(IDRIS_MAXGMP);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     idris_doneAlloc();
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
@@ -474,7 +474,7 @@ VAL idris_castBigFloat(VM* vm, VAL i) {
 VAL idris_castFloatBig(VM* vm, VAL f) {
     double val = GETFLOAT(f);
 
-    mpint* bigint;
+    mpint* bigint = nil;
     VAL cl = allocate(sizeof(Closure) + sizeof(mpint), 0);
     bigint = (mpint*)(((char*)cl) + sizeof(Closure));
 

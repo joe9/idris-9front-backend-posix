@@ -1,27 +1,3 @@
-#ifndef _IDRISRTS_H
-#define _IDRISRTS_H
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#ifdef HAS_PTHREAD
-#include <pthread.h>
-#endif
-#include <stdint.h>
-#if (__linux__ || __APPLE__ || __FreeBSD__ || __DragonFly__)
-#include <signal.h>
-#endif
-
-#include "idris_heap.h"
-#include "idris_stats.h"
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS 0
-#endif
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE 1
-#endif
 
 // Closures
 typedef enum {
@@ -211,7 +187,7 @@ typedef void(*func)(VM*, VAL*);
 
 // Integers, floats and operators
 
-typedef intptr_t i_int;
+/* typedef intptr_t i_int; */
 
 #define MKINT(x) ((void*)((i_int)(((x)<<1)+1)))
 #define GETINT(x) ((i_int)(x)>>1)
@@ -411,7 +387,3 @@ void stackOverflow(void);
 #define idris_setConArg SETARG
 #define idris_getConArg GETARG
 #define idris_mkInt(x) MKINT((intptr_t)(x))
-
-#include "idris_gmp.h"
-
-#endif

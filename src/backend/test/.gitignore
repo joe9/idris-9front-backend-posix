@@ -2,3 +2,4 @@ hello.c
 hello.ibc
 *.8
 8.*.out
+*.json

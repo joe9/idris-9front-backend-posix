@@ -21,3 +21,16 @@ mk
 
 
 ```
+
+Reasons for choosing Idris as the frontend
+------------------------------------------
+
+1. Uniqueness Types
+2. Cleaner syntax
+3. Effects
+4. Native dependent types (not used much, but, is a nice to have)
+
+Reasons for choosing GHC Core and STG for the Intermediate Representation
+-------------------------------------------------------------------------
+
+1. Types

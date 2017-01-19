@@ -1,5 +1,8 @@
 hello.c
-hello.ibc
+hello
+test-vect
+test-vect.c
+*.ibc
 *.8
 8.*.out
 *.json
